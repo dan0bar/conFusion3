@@ -3,6 +3,8 @@ const http = require('http');
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const dishRouter = require("./routes/dishRouter");
+const leaderRouter = require('./routes/leaderRouter')
+const promotionsRouter = require('./routes/promoRouter')
 
 const hostname = 'localhost';
 const port = 3000;
@@ -11,15 +13,16 @@ const app = express();
 
 app.use(bodyParser.json());
 
+console.log('Connecting Routers')
 app.use('/dishes', dishRouter);
+app.use('/leaders', leaderRouter)
+app.use('/promotions', promotionsRouter)
 
 console.log('Using logging Middleware Morgan')
 app.use(morgan('dev'));
 
 console.log('Using static files')
 app.use(express.static(__dirname + '/public'))
-
-
 
 app.use((req, res, next) => {
     res.statusCode = 200;
